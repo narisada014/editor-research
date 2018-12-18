@@ -806,6 +806,11 @@
     ckeditor5 "^11.2.0"
     lodash-es "^4.17.10"
 
+"@ckeditor/ckeditor5-vue@^1.0.0-beta.1":
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-vue/-/ckeditor5-vue-1.0.0-beta.1.tgz#976bf7b00bd5f9d99637bfa8279e35f2e899c334"
+  integrity sha512-CTNyEdofAfmhVomkft6kYEmbh6yRvZMzkvCC4bHZ8LOBHBY7QWkWXP3gbs19SvimUV7PfnsrsDE093aI0SyXqQ==
+
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@intervolga/optimize-cssnano-plugin/-/optimize-cssnano-plugin-1.0.6.tgz#be7c7846128b88f6a9b1d1261a0ad06eb5c0fdf8"
