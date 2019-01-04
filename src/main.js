@@ -1,8 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
-
-Vue.config.productionTip = false
-
+import AlisEditor from './AlisEditor.vue'
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  render: h => h(AlisEditor),
+}).$mount('#alis-editor')

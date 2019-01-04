@@ -1,14 +1,12 @@
-<template>
-  <div id="app">
+<template lang="html">
+  <div id="ALISEditor" class="container">
     <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
   </div>
 </template>
 
 <script>
-  /* eslint-disable no-console */
-
-  //   /* eslint-disable no-console,no-undef */
-// import Vue from 'vue';
+/* eslint-disable no-console */
+import Vue from 'vue';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 
@@ -21,22 +19,15 @@ import ParagraphButtonUI from '@ckeditor/ckeditor5-paragraph/src/paragraphbutton
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 import HeadingButtonsUI from '@ckeditor/ckeditor5-heading/src/headingbuttonsui';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
 
-
-export default {
-  name: 'app',
+export default Vue.extend({
   components: {
-    // Use the <ckeditor> component in this view.
     ckeditor: CKEditor.component
   },
   data() {
     return {
       editor: BalloonEditor,
-      editorData: '<p>これはテストです</p>',
+      editorData: 'これはテストです',
       editorConfig: {
         plugins: [
           EssentialsPlugin,
@@ -47,11 +38,7 @@ export default {
           HeadingButtonsUI,
           ParagraphButtonUI,
           Paragraph,
-          BlockQuote,
-          Image,
-          ImageToolbar,
-          ImageCaption,
-          ImageStyle
+          BlockQuote
         ],
         toolbar: {
           items: [
@@ -61,8 +48,7 @@ export default {
             'heading1',
             'heading2',
             'paragraph',
-            'blockQuote',
-            'insert'
+            'blockQuote'
           ]
         },
         heading: {
@@ -70,22 +56,6 @@ export default {
             { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
             { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
             { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
-          ]
-        },
-        // imageはまだうまく行ってません
-        image: {
-          // You need to configure the image toolbar, too, so it uses the new style buttons.
-          toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
-
-          styles: [
-            // This option is equal to a situation where no style is applied.
-            'full',
-
-            // This represents an image aligned to the left.
-            'alignLeft',
-
-            // This represents an image aligned to the right.
-            'alignRight'
           ]
         }
       }
@@ -96,5 +66,12 @@ export default {
     //     .create(document.querySelector('#app'))
     console.log(this.editor)
   }
-};
+});
 </script>
+
+<style scoped>
+  .container {
+    width: 760px;
+    margin: 10px auto;
+  }
+</style>
