@@ -101,6 +101,6 @@ export default function insertImage(editor, imageUrl, imageAlt, doc ) {
 //   console.log(editor)
 //   editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
 //     // Configure the URL to the upload script in your back-end here!
-//     return new MyUploadAdapter( loader, 'https://narisada.alis-test.tk/d/api/articles_images/' );
+//     return new MyUploadAdapter( loader, '' );
 //   };
 // }

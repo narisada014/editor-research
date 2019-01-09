@@ -14,28 +14,30 @@
       <li class="insert-button__listItem" @click="dispatchUpload">●</li>
       <!--<li class="insert-button__listItem" @click="appendRule"><InsertButtonIcon :src="SvgIcon.rule" /></li>-->
     </ul>
+    <input type="file" @change="onFileChange">
   </div>
 </template>
 
 <script>
     /* eslint-disable no-console */
 import Vue from 'vue'
+import axios from 'axios'
 import InsertImage from '../InsertImage'
 
 export default Vue.extend({
   props: {
-    editor: Object
+    editor: Object,
+    articleId: String,
+    token: String
   },
   data() {
     return {
       isOpen: false,
-      doc: null
+      doc: null,
+      uploadFile: null,
+      uploadImageSize: null,
+      uploadImageExtension: null
     }
-  },
-  computed: {
-    // SvgIcon() {
-    //   return SvgIcon
-    // }
   },
   methods: {
     toggleIsOpen() {
@@ -44,8 +46,7 @@ export default Vue.extend({
       this.doc = this.editor.model.document
     },
     dispatchUpload() {
-      InsertImage(this.editor, 'https://cdn-images-1.medium.com/max/2000/1*SL-cdyiki0yekLmtl6fpOQ.jpeg', '', this.doc)
-      // ;(this.$el.querySelector('[type="file"]') as any).click()
+      this.$el.querySelector('[type="file"]').click()
     },
     // appendRule() {
     //   this.$emit('append', BlockType.Rule)
@@ -55,6 +56,42 @@ export default Vue.extend({
       // this.$emit('disable');
       // this.$emit('upload', event)
       console.log(event)
+    },
+    onFileChange(event) {
+      this.uploadFile = event.target.files[0]
+      if (this.uploadFile === null) {
+        return
+      }
+      console.log(this.uploadFile)
+      console.log(this.token)
+      this.uploadImageSize = this.uploadFile.size
+      this.uploadImageExtension = this.uploadFile.type
+      const config = {
+        headers: {
+          'Authorization': this.token,
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        },
+        params: {
+          'upload_image_size': this.uploadImageSize,
+          'upload_image_extension': this.uploadImageExtension
+        }
+      }
+      axios.get(`https://xxxx/api/me/articles/${this.articleId}/image_upload_url`, config)
+        .then((res) => {
+          console.log(res)
+          const json = JSON.parse(JSON.stringify(res.data))
+          console.log(json)
+          axios.put(json['url'], this.uploadFile, {
+            headers: {
+              'Content-Type': this.uploadFile.type
+            }
+          }).then((res) => {
+            console.log('fu')
+            console.log(res)
+            InsertImage(this.editor, `https://xxx/${json['upload_url_suffix']}`, '', this.doc)
+          })
+        })
     }
   }
 })
