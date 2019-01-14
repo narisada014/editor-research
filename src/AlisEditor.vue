@@ -295,7 +295,7 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style lang="scss">
 .container {
   width: 640px;
   margin: 10px auto;
@@ -315,7 +315,7 @@ a {
   padding: 20px;
   text-decoration: none;
   width: 100%;
-  height: 180px;
+  height: 100%;
 
   .title {
     color: #030303;
