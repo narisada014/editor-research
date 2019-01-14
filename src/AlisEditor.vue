@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="ALISEditor">
-    <div class="container" id="editor">
+    <div class="container" id="editor" style="border: solid 1px">
     </div>
     <InsertButton
       :articleId="articleId"
@@ -40,7 +40,7 @@ import InsertButton from './components/InsertButton';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 
 const IFRAME_SRC = '//cdn.iframe.ly/api/iframe';
-const API_KEY = 'xxx';
+const API_KEY = 'xx';
 
 export default Vue.extend({
   props: {
@@ -103,6 +103,13 @@ export default Vue.extend({
         mediaEmbed: {
           previewsInData: false,
           providers: [
+            // {
+            //   name: 'twitter_profile',
+            //   url: 'twitter_profile.alis.to',
+            //   html: () => {
+            //     if (this.dom !== null) {return (this.dom)}
+            //   }
+            // },
             {
               name: 'twitter',
               url: /^twitter\.com/,
@@ -119,16 +126,22 @@ export default Vue.extend({
                     '<div class="iframely-embed">' +
                     '<div class="iframely-responsive">' +
                     `<iframe src="${ iframeUrl }" ` +
-                    'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
+                    'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen">' +
                     '</iframe>' +
                     '</div>' +
                     '</div>'
                   );
                 }
-                const tweetUserUrl = 'https://twitter.com/' + urlArr[1]
-                this.setTwitterData(tweetUserUrl)
-                console.log(this.dom)
-                if (this.dom !== null) {return (this.dom)}
+                const screenName = urlArr[1];
+                console.log(screenName);
+                return (
+                  '<div style="position: relative; padding-bottom: 180px;">' +
+                  `<iframe src="http://localhost:3000/media_embed/twitter_profile/${screenName}" +
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen +
+                  style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">` +
+                  '</iframe>' +
+                  '</div>'
+               );
               }
             },
             {
@@ -247,36 +260,37 @@ export default Vue.extend({
       .then(editor => {
         this.editor = editor
         // this.editor.setData('')
-        this.$nextTick()
-        this.initialState = editor.getData()
+        // this.$nextTick()
+        // this.initialState = editor.getData()
       })
   },
   methods: {
     handleUpload() {
-      console.log('hoge')
+      // console.log('hoge')
     },
-    async getTwitterInfo(tweetUserUrl) {
-      const data = await axios.get(
-        `https://iframe.ly/api/oembed?api_key=${API_KEY}&url=${encodeURIComponent(
-        tweetUserUrl
-        )}&omit_script=1&omit_css=1`
-      )
-      // .then(res => { return res.data }))
-      return data
-    },
-    async setTwitterData(tweetUserUrl) {
-      await this.getTwitterInfo(tweetUserUrl).then((twitterProfileInfo) => {
-        this.twitterProfileInfo = twitterProfileInfo.data
-      })
-      this.dom =
-        '<div>' +
-        `<a href="${tweetUserUrl}" target="_blank" class="twitter-profile-card">` +
-        `<div class="title">${this.twitterProfileInfo.title}</div>` +
-        `<div class="description">${this.twitterProfileInfo.description}</div>` +
-        '<div class="site">twitter.com</div>' +
-        '</a>' +
-        '</div>';
-    }
+    // getTwitterInfo(tweetUserUrl) {
+    //   return axios.get(
+    //     `https://iframe.ly/api/oembed?api_key=${API_KEY}&url=${encodeURIComponent(
+    //     tweetUserUrl
+    //     )}&omit_script=1&omit_css=1`
+    //   )
+    // },
+    // setTwitterData(tweetUserUrl) {
+    //   this.getTwitterInfo(tweetUserUrl).then((twitterProfileInfo) => {
+    //     console.log(twitterProfileInfo)
+    //     this.twitterProfileInfo = twitterProfileInfo.data
+    //     this.dom =
+    //         '<div>' +
+    //         `<a href="${tweetUserUrl}" target="_blank" class="twitter-profile-card">` +
+    //         `<div class="title">${this.twitterProfileInfo.title}</div>` +
+    //         `<div class="description">${this.twitterProfileInfo.description}</div>` +
+    //         '<div class="site">twitter.com</div>' +
+    //         '</a>' +
+    //         '</div>';
+    //     this.editor.execute('mediaEmbed', 'twitter_profile.alis.to')
+    //     this.dom = null;
+    //   })
+    // }
   }
 });
 </script>
@@ -301,6 +315,7 @@ a {
   padding: 20px;
   text-decoration: none;
   width: 100%;
+  height: 180px;
 
   .title {
     color: #030303;
