@@ -40,7 +40,7 @@ import InsertButton from './components/InsertButton';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 
 const IFRAME_SRC = '//cdn.iframe.ly/api/iframe';
-const API_KEY = 'xx';
+const API_KEY = '518401c27d170fda5a9fbc';
 
 export default Vue.extend({
   props: {
@@ -55,7 +55,7 @@ export default Vue.extend({
   data() {
     return {
       insertButton: {
-        isVisibleInsertButton: true,
+        isVisibleInsertButton: false,
         posX: 0,
         posY: 0,
         target: null
@@ -71,9 +71,24 @@ export default Vue.extend({
       links: null
     };
   },
-  mounted: function() {
+  mounted() {
+    // プラスボタンの挙動制御
+    document.addEventListener('selectionchange', event => {
+      const selection = window.getSelection()
+      const target = selection.anchorNode
+      if (target === null) {
+        this.insertButton.isVisibleInsertButton = false
+        return
+      }
+      if (target.textContent === "") {
+        this.insertButton.isVisibleInsertButton = true
+      } else {
+        this.insertButton.isVisibleInsertButton = false
+      }
+    })
+    // バルーンエディタ
     BalloonEditor
-      .create( document.querySelector( '#editor' ), {
+      .create( document.querySelector('#editor'), {
         plugins: [
           EssentialsPlugin,
           BoldPlugin,
@@ -133,12 +148,11 @@ export default Vue.extend({
                   );
                 }
                 const screenName = urlArr[1];
-                console.log(screenName);
                 return (
-                  '<div style="position: relative; padding-bottom: 180px;">' +
+                  '<div>' +
                   `<iframe src="http://localhost:3000/media_embed/twitter_profile/${screenName}" +
                   frameborder="0" allow="autoplay; encrypted-media" allowfullscreen +
-                  style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">` +
+                  style="width: 100%; height: 160px; left: 0;">` +
                   '</iframe>' +
                   '</div>'
                );
@@ -332,6 +346,8 @@ a {
     letter-spacing: 0.7px;
     line-height: 1.5;
     margin-bottom: 8px;
+    overflow: hidden;
+    height: 3.6em;
   }
 
   .site {
