@@ -40,7 +40,7 @@ import InsertButton from './components/InsertButton';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 
 const IFRAME_SRC = '//cdn.iframe.ly/api/iframe';
-const API_KEY = '518401c27d170fda5a9fbc';
+const API_KEY = 'xx';
 
 export default Vue.extend({
   props: {
