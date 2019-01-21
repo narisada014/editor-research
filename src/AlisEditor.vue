@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="ALISEditor">
-    <div class="container" id="editor" style="border: solid 1px">
+    <div class="container" id="editor" style="border: none">
     </div>
     <InsertButton
       :articleId="articleId"
@@ -296,6 +296,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  box-shadow: none;
+}
+
 .container {
   width: 640px;
   margin: 10px auto;
