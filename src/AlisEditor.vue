@@ -8,7 +8,7 @@
       :editor="editor"
       v-if="insertButton.isVisibleInsertButton"
       :style="{
-        left: `${insertButton.posX}px`,
+        left: `calc(50% - 400px)`,
         top: `${insertButton.posY}px`
       }"
       @upload="handleUpload"
@@ -81,6 +81,8 @@ export default Vue.extend({
         return
       }
       if (target.textContent === "") {
+        const rect = target.getBoundingClientRect()
+        this.insertButton.posY = rect.top - 12 + window.pageYOffset
         this.insertButton.isVisibleInsertButton = true
       } else {
         this.insertButton.isVisibleInsertButton = false
